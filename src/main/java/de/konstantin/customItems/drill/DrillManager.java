@@ -46,11 +46,9 @@ public class DrillManager {
     }
 
     public boolean isPickaxe(Material material) {
-        return material == Material.WOODEN_PICKAXE ||
-                material == Material.STONE_PICKAXE ||
-                material == Material.IRON_PICKAXE ||
-                material == Material.GOLDEN_PICKAXE ||
-                material == Material.DIAMOND_PICKAXE ||
-                material == Material.NETHERITE_PICKAXE;
+        return switch (material) {
+            case WOODEN_PICKAXE, STONE_PICKAXE, IRON_PICKAXE, GOLDEN_PICKAXE, DIAMOND_PICKAXE, NETHERITE_PICKAXE -> true;
+            default -> false;
+        };
     }
 }
