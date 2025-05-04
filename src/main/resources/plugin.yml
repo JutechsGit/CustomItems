@@ -1,0 +1,8 @@
+name: CustomItems
+author: dgnv
+version: '1.0-SNAPSHOT'
+main: de.konstantin.customItems.CustomItems
+api-version: '1.21'
+commands:
+  customitems:
+    description: Verwaltet Custom Items und Effekte
