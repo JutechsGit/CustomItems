@@ -13,7 +13,7 @@ public final class CustomItems extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.drillManager = new DrillManager();
+        this.drillManager = new DrillManager(this);
         getServer().getPluginManager().registerEvents(new EffectInventoryListener(drillManager), this);
         getServer().getPluginManager().registerEvents(new DrillListener(drillManager), this);
         Objects.requireNonNull(getCommand("customitems")).setExecutor(new CustomItemsCommand(drillManager));
@@ -21,9 +21,5 @@ public final class CustomItems extends JavaPlugin {
 
     @Override
     public void onDisable() {
-    }
-
-    public DrillManager getDrillManager() {
-        return drillManager;
     }
 }

@@ -2,6 +2,8 @@ package de.konstantin.customItems.Listeners;
 
 
 import de.konstantin.customItems.drill.DrillManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
@@ -18,31 +20,26 @@ public class EffectInventoryListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player)) return;
-        if (!event.getView().getTitle().equals("§bWähle einen Effekt")) return;
+
+        if (!event.getView().title().equals(Component.text("Wähle einen Effekt").color(NamedTextColor.DARK_PURPLE))) return;
 
         event.setCancelled(true);
-        ItemStack clicked = event.getCurrentItem();
-        if (clicked == null || clicked.getType() == Material.AIR) return;
 
-        // Handle Drill effect
-        if (clicked.getType() == Material.IRON_PICKAXE &&
-                clicked.getItemMeta() != null &&
-                "§aDrill-Effekt".equals(clicked.getItemMeta().getDisplayName())) {
-
+        if (event.getSlot() == 4) {
             ItemStack heldItem = player.getInventory().getItemInMainHand();
             if (!drillManager.isPickaxe(heldItem.getType())) {
-                player.sendMessage("§cDu musst eine Spitzhacke in der Hand halten!");
+                player.sendMessage(Component.text("Du musst eine Spitzhacke in der Hand halten!").color(NamedTextColor.RED));
                 return;
             }
 
             ItemStack modified = drillManager.createDrill(heldItem);
             if (modified == null) {
-                player.sendMessage("§cFehler beim Anwenden des Effekts.");
+                player.sendMessage(Component.text("Fehler beim Anwenden des Effekts.").color(NamedTextColor.RED));
                 return;
             }
 
             player.getInventory().setItemInMainHand(modified);
-            player.sendMessage("§aDrill-Effekt angewendet!");
+            player.sendMessage(Component.text("Drill-Effekt angewendet!").color(NamedTextColor.GREEN));
             player.closeInventory();
         }
     }
